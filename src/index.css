@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  font-family: 'Inter', sans-serif;
+  color: #f5f7fa;
+  background: #03070d;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: #03070d;
+}
+
+button {
+  font-family: inherit;
+}
+
+.portfolio {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 75% 35%,
+      rgba(0, 140, 255, 0.12),
+      transparent 30%
+    ),
+    #03070d;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 8%;
+}
+
+.hero-content {
+  max-width: 850px;
+}
+
+.hero-label {
+  margin-bottom: 24px;
+  color: #00b7ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+}
+
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(4rem, 9vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.hero h1 span {
+  display: block;
+  color: #008cff;
+}
+
+.hero-description {
+  margin-top: 32px;
+  color: #a7b2c3;
+  font-size: 1.1rem;
+}
+
+.hero-button {
+  margin-top: 40px;
+  padding: 14px 24px;
+  border: 1px solid #008cff;
+  border-radius: 999px;
+  background: transparent;
+  color: #f5f7fa;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.hero-button:hover {
+  background: #008cff;
+  box-shadow: 0 0 30px rgba(0, 140, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.hero {
+  position: relative;
+}
+
+.experience {
+  position: absolute;
+  inset: 0 0 0 45%;
+}
+
+.experience canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero-3d canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.test-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #07111f;
+
+  color: #64748b;
+
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.15em;
+}
+
+.scroll-debug {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 100;
+
+  padding: 8px 12px;
+
+  border: 1px solid rgba(0, 183, 255, 0.3);
+  border-radius: 6px;
+
+  background: rgba(3, 7, 13, 0.7);
+  backdrop-filter: blur(10px);
+
+  color: #00b7ff;
+
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.about-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 8%;
+  background: #07111f;
+}
+
+.about-content {
+  max-width: 900px;
+}
+
+.about-label {
+  margin-bottom: 24px;
+  color: #00b7ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+}
+
+.about-section h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.about-section h2 span {
+  display: block;
+  color: #008cff;
+}
+
+.about-description {
+  max-width: 680px;
+  margin-top: 36px;
+  color: #a7b2c3;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.about-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+  max-width: 800px;
+}
+
+.about-meta div {
+  padding-top: 18px;
+  border-top: 1px solid rgba(167, 178, 195, 0.2);
+}
+
+.about-meta span {
+  display: block;
+  margin-bottom: 8px;
+  color: #64748b;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+.about-meta strong {
+  color: #f5f7fa;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 100px 6%;
+  }
+
+  .about-meta {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
