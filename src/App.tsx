@@ -1,36 +1,23 @@
 import Experience from './three/Experience';
 import ScrollController from './three/ScrollController';
+import SideNav from './components/SideNav';
+import Hero from './sections/Hero';
 import AboutSection from './sections/AboutSection';
 
 function App() {
   return (
-    <main className="portfolio">
-      <ScrollController />
-      <section className="hero">
-        <div className="hero-content">
-          <p className="hero-label">
-            IRPAN AFRIZAL — SOFTWARE DEVELOPER
-          </p>
+    <>
+      <SideNav />
 
-          <h1>
-            Building digital
-            <span> experiences.</span>
-          </h1>
-
-          <p className="hero-description">
-            Web Developer • Android Developer • AI &amp; RAG Enthusiast
-          </p>
-
-          <button className="hero-button">
-            Explore My Universe
-          </button>
-        </div>
-
+      <main className="portfolio">
+        {/* Canvas 3D tunggal, fixed di belakang semua section */}
         <Experience />
-      </section>
+        <ScrollController />
 
-      <AboutSection />
-    </main>
+        <Hero />
+        <AboutSection />
+      </main>
+    </>
   );
 }
 
