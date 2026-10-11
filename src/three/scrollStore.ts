@@ -10,6 +10,12 @@ export const scrollState = {
   section: 0,
   /** progress 0..1 selama Hero "terkunci" (sticky) di layar */
   pin: 0,
+  /** pin yang sudah di-smooth (0..1), dipakai model 3D */
+  pinSmooth: 0,
+  /** kursor sedang berada di area model 3D */
+  hover: false,
+  /** target putaran model 3D (radian), digerakkan scroll/drag di area model */
+  modelSpin: 0,
   /** delta scroll terakhir (px), meluruh otomatis di SceneDirector */
   velocity: 0,
   /** posisi mouse ternormalisasi -1..1 */

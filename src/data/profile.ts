@@ -10,7 +10,11 @@ export const profile = {
 
   /** foto di folder public/images */
   portrait: '/images/portrait.png',
-  aboutPortrait: '/images/about-portrait.png',
+  /**
+   * Model 3D untuk Hero (file .glb di public/models/).
+   * Isi null untuk kembali memakai foto biasa.
+   */
+  model: '/models/hero.glb' as string | null,
   /** taruh CV di public/cv/ lalu sesuaikan namanya */
   cv: '/cv/Irpan-Afrizal-CV.pdf',
 

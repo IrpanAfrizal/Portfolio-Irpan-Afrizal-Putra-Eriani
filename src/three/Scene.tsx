@@ -1,6 +1,8 @@
 import { useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { Suspense, useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { profile } from '../data/profile';
+import HeroModel, { HeroModelBoundary } from './HeroModel';
 import SceneDirector from './SceneDirector';
 import { sceneFrame } from './sceneKeyframes';
 import { motion } from './scrollStore';
@@ -66,6 +68,14 @@ export default function Scene() {
     <>
       <SceneDirector />
       <StarField />
+
+      {profile.model && (
+        <HeroModelBoundary>
+          <Suspense fallback={null}>
+            <HeroModel url={profile.model} />
+          </Suspense>
+        </HeroModelBoundary>
+      )}
     </>
   );
 }

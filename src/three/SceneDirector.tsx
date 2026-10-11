@@ -28,6 +28,8 @@ export default function SceneDirector() {
       ? 0
       : THREE.MathUtils.damp(smoothPin.current, scrollState.pin, 5, dt);
 
+    scrollState.pinSmooth = smoothPin.current;
+
     sampleKeyframes(smoothSection.current, sceneFrame);
 
     scrollState.velocity = THREE.MathUtils.damp(scrollState.velocity, 0, 6, dt);
