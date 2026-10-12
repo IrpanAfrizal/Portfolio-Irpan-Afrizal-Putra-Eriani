@@ -701,8 +701,9 @@ a {
   font-size: 2rem;
 }
 
-/* animasi muncul About (dipicu class .is-visible dari useReveal) */
-.about-section [data-reveal] {
+/* animasi muncul About & Skills (dipicu class .is-visible dari useReveal) */
+.about-section [data-reveal],
+.skills-section [data-reveal] {
   opacity: 0;
   transform: translateY(28px);
   transition:
@@ -711,9 +712,167 @@ a {
   transition-delay: calc(var(--i, 0) * 120ms);
 }
 
-.about-section.is-visible [data-reveal] {
+.about-section.is-visible [data-reveal],
+.skills-section.is-visible [data-reveal] {
   opacity: 1;
   transform: none;
+}
+
+/* =========================================================
+   SKILLS UNIVERSE  (tepat satu layar penuh)
+   ========================================================= */
+.skills-section {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  min-height: 620px;
+  padding: 72px 4% 56px calc(var(--nav-w) + 3%);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr);
+  align-items: stretch;
+  gap: clamp(16px, 2vw, 40px);
+  width: 100%;
+  max-width: 1480px;
+}
+
+.skills-head {
+  max-width: 520px;
+}
+
+.skills-head .about-title {
+  margin-top: 12px;
+  font-size: clamp(2.2rem, 3.8vw, 3.3rem);
+}
+
+.skills-lead {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.skill-groups {
+  display: grid;
+  margin-top: clamp(14px, 2.4vh, 26px);
+  list-style: none;
+}
+
+.skill-group {
+  display: flex;
+  gap: 14px;
+  padding: clamp(8px, 1.3vh, 13px) 0;
+  border-top: 1px solid rgba(167, 178, 195, 0.15);
+}
+
+.skill-group h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+}
+
+.skill-group p {
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+/* bumi 3D dipasang di kotak ini: dari atas judul sampai dasar daftar */
+.skills-zone {
+  min-height: 420px;
+}
+
+/* gaya lingkaran Skills Level (dipakai jika SkillLevel diaktifkan lagi) */
+.skill-level {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-top: 18px;
+}
+
+.skill-level svg {
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+
+.skill-ring-track {
+  fill: none;
+  stroke: rgba(167, 178, 195, 0.18);
+  stroke-width: 6;
+}
+
+.skill-ring-progress {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 0 var(--full);
+  filter: drop-shadow(0 0 6px rgba(0, 183, 255, 0.55));
+  transition: stroke-dasharray 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.6s;
+}
+
+.skills-section.is-visible .skill-ring-progress {
+  stroke-dasharray: var(--dash) var(--full);
+}
+
+.skill-level text {
+  fill: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  transform: rotate(90deg);
+  transform-origin: 56px 56px;
+}
+
+.skill-level strong {
+  display: block;
+  color: var(--cyan);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.skill-level span {
+  display: block;
+  margin-top: 2px;
+  color: var(--dim);
+  font-size: 0.8rem;
+}
+
+/* layar pendek: rapatkan agar tetap muat satu layar */
+@media (max-height: 760px) {
+  .skills-section {
+    padding-top: 56px;
+    padding-bottom: 40px;
+  }
+
+  .skill-group {
+    padding: 6px 0;
+  }
+
+  .skill-group p {
+    font-size: 0.74rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .skills-section {
+    height: auto;
+    min-height: 100vh;
+    padding: 100px 6% 80px;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-zone {
+    grid-row: 1;
+    height: 52vh;
+  }
 }
 
 /* =========================================================
@@ -779,7 +938,8 @@ a {
   }
 
   .hero [data-rise],
-  .about-section [data-reveal] {
+  .about-section [data-reveal],
+  .skills-section [data-reveal] {
     opacity: 1;
     transform: none;
     animation: none;
@@ -789,6 +949,10 @@ a {
   .hero-scroll svg,
   .holo-frame::after {
     animation: none;
+  }
+
+  .skill-ring-progress {
+    transition: none;
   }
 
   /* tanpa "perjalanan" 300vh: Hero tampil biasa */

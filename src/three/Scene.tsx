@@ -3,13 +3,14 @@ import { Suspense, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { profile } from '../data/profile';
 import HeroModel, { HeroModelBoundary } from './HeroModel';
+import SkillsUniverse from './SkillsUniverse';
 import SceneDirector from './SceneDirector';
 import { sceneFrame } from './sceneKeyframes';
 import { motion } from './scrollStore';
 
 const IS_MOBILE =
   typeof window !== 'undefined' && window.innerWidth < 768;
-const PARTICLE_COUNT = IS_MOBILE ? 450 : 900;
+const PARTICLE_COUNT = IS_MOBILE ? 700 : 1400;
 
 /** Medan bintang: kamera melaju menembusnya saat scroll. */
 function StarField() {
@@ -22,7 +23,7 @@ function StarField() {
     for (let i = 0; i < PARTICLE_COUNT; i += 1) {
       array[i * 3] = (Math.random() - 0.5) * 14; // x
       array[i * 3 + 1] = (Math.random() - 0.5) * 10; // y
-      array[i * 3 + 2] = (Math.random() - 0.5) * 14 - 1; // z (dalam)
+      array[i * 3 + 2] = -28 + Math.random() * 34; // z: panjang agar kamera bisa terbang jauh
     }
     return array;
   }, []);
@@ -68,6 +69,8 @@ export default function Scene() {
     <>
       <SceneDirector />
       <StarField />
+
+      <SkillsUniverse />
 
       {profile.model && (
         <HeroModelBoundary>

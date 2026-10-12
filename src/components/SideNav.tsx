@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 const NAV_ITEMS = [
   { id: 'hero', label: 'HERO', ready: true },
   { id: 'about', label: 'ABOUT', ready: true },
-  { id: 'skills', label: 'SKILLS UNIVERSE', ready: false },
+  { id: 'skills', label: 'SKILLS UNIVERSE', ready: true },
   { id: 'projects', label: 'PROJECT GALAXY', ready: false },
   { id: 'experience', label: 'EXPERIENCE', ready: false },
   { id: 'research', label: 'RESEARCH / PUBLICATION', ready: false },
