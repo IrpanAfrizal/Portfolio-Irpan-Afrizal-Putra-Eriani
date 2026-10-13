@@ -100,3 +100,10 @@ export const ServerIcon = (p: IconProps) => (
     <path d="M7 7h.01M7 17h.01" />
   </svg>
 );
+
+export const ArrowLeftIcon = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <path d="M19 12H5" />
+    <path d="m11 6-6 6 6 6" />
+  </svg>
+);

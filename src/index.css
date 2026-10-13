@@ -701,9 +701,10 @@ a {
   font-size: 2rem;
 }
 
-/* animasi muncul About & Skills (dipicu class .is-visible dari useReveal) */
+/* animasi muncul About, Skills & Projects (dipicu class .is-visible dari useReveal) */
 .about-section [data-reveal],
-.skills-section [data-reveal] {
+.skills-section [data-reveal],
+.projects-section [data-reveal] {
   opacity: 0;
   transform: translateY(28px);
   transition:
@@ -713,7 +714,8 @@ a {
 }
 
 .about-section.is-visible [data-reveal],
-.skills-section.is-visible [data-reveal] {
+.skills-section.is-visible [data-reveal],
+.projects-section.is-visible [data-reveal] {
   opacity: 1;
   transform: none;
 }
@@ -876,6 +878,297 @@ a {
 }
 
 /* =========================================================
+   PROJECT GALAXY  (tepat satu layar penuh)
+   ========================================================= */
+.projects-section {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  min-height: 620px;
+  padding: 72px 4% 56px calc(var(--nav-w) + 3%);
+}
+
+.projects-inner {
+  width: 100%;
+  max-width: 1480px;
+}
+
+.projects-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.projects-head > div {
+  max-width: 620px;
+}
+
+.projects-head .about-title {
+  margin-top: 12px;
+  font-size: clamp(2.2rem, 3.8vw, 3.3rem);
+}
+
+.projects-all {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(0, 183, 255, 0.4);
+  color: var(--cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.projects-all:hover {
+  color: var(--text);
+  border-color: var(--cyan);
+}
+
+.projects-carousel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(20px, 4vh, 40px);
+}
+
+.projects-track {
+  display: flex;
+  flex: 1;
+  gap: 18px;
+  min-width: 0;
+  /* ruang untuk bayangan & efek angkat kartu */
+  margin: -14px;
+  padding: 14px;
+  overflow-x: auto;
+  list-style: none;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.projects-track::-webkit-scrollbar {
+  display: none;
+}
+
+.projects-item {
+  flex: 0 0 calc((100% - 3 * 18px) / 4);
+  min-width: 220px;
+  scroll-snap-align: start;
+  perspective: 900px;
+}
+
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(0, 183, 255, 0.2);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(0, 183, 255, 0.14), transparent 55%),
+    rgba(7, 17, 31, 0.78);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition:
+    transform 0.25s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.project-card:hover {
+  border-color: rgba(0, 183, 255, 0.6);
+  box-shadow:
+    0 14px 50px rgba(0, 0, 0, 0.45),
+    0 0 36px rgba(0, 140, 255, 0.22);
+}
+
+.project-art {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 183, 255, 0.15);
+}
+
+.project-art img,
+.project-art-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px 16px 14px;
+}
+
+.project-num {
+  color: var(--cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+.project-body h3 {
+  margin-top: 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.project-body p {
+  margin-top: 6px;
+  color: var(--dim);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.project-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+.project-tags li {
+  padding: 3px 8px;
+  border: 1px solid rgba(0, 183, 255, 0.3);
+  border-radius: 5px;
+  background: rgba(0, 140, 255, 0.1);
+  color: #9fd0ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+}
+
+.project-go {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(0, 183, 255, 0.5);
+  border-radius: 50%;
+  color: var(--text);
+  transition: background 0.25s ease;
+}
+
+a.project-go:hover {
+  background: var(--blue);
+}
+
+.carousel-arrow {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(0, 183, 255, 0.4);
+  border-radius: 50%;
+  background: rgba(3, 7, 13, 0.6);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.25s ease, opacity 0.25s ease;
+}
+
+.carousel-arrow[hidden] {
+  display: none;
+}
+
+.carousel-arrow:hover:not(:disabled) {
+  background: var(--blue);
+}
+
+.carousel-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.carousel-dots button {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(167, 178, 195, 0.3);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.carousel-dots button[aria-current='true'] {
+  background: var(--cyan);
+  transform: scale(1.3);
+}
+
+@media (max-height: 760px) {
+  .projects-section {
+    padding-top: 56px;
+    padding-bottom: 40px;
+  }
+
+  .project-body {
+    padding: 12px 14px 12px;
+  }
+
+  .project-foot {
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .projects-item {
+    flex-basis: calc((100% - 18px) / 2);
+  }
+}
+
+@media (max-width: 900px) {
+  .projects-section {
+    height: auto;
+    min-height: 100vh;
+    padding: 100px 6% 80px;
+  }
+
+  .projects-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-item {
+    flex-basis: 82%;
+  }
+
+  .carousel-arrow {
+    display: none;
+  }
+}
+
+/* =========================================================
    RESPONSIVE
    ========================================================= */
 @media (max-width: 900px) {
@@ -939,7 +1232,8 @@ a {
 
   .hero [data-rise],
   .about-section [data-reveal],
-  .skills-section [data-reveal] {
+  .skills-section [data-reveal],
+  .projects-section [data-reveal] {
     opacity: 1;
     transform: none;
     animation: none;
@@ -955,6 +1249,11 @@ a {
     transition: none;
   }
 
+  .project-card {
+    transform: none;
+    transition: none;
+  }
+
   /* tanpa "perjalanan" 300vh: Hero tampil biasa */
   .hero {
     height: auto;
@@ -967,5 +1266,43 @@ a {
 
   .hero-stage::after {
     display: none;
+  }
+}
+
+/* =========================================================
+   PROJECT GALAXY — versi Glass Folder
+   ========================================================= */
+.projects-section {
+  height: auto;                /* override 100vh */
+  min-height: 100vh;
+  padding-top: 120px;          /* ruang buat file naik ke atas folder */
+  padding-bottom: 120px;
+}
+
+.projects-folders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  justify-items: center;
+  align-items: end;
+  gap: clamp(40px, 6vw, 80px) clamp(24px, 4vw, 56px);
+  margin-top: clamp(48px, 8vh, 96px);
+  padding-top: 60px;           /* cadangan ruang animasi lift */
+}
+
+/* judul folder boleh panjang — paksa wrap, jangan ellipsis */
+.projects-folders .gf-title {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  max-width: 180px;
+}
+
+.projects-folders .gf-label {
+  max-width: 200px;
+}
+
+@media (max-width: 900px) {
+  .projects-folders {
+    grid-template-columns: 1fr;
   }
 }

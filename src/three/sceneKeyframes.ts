@@ -40,7 +40,15 @@ export const KEYFRAMES: SceneKeyframe[] = [
     particleOpacity: 0.7,
     accent: '#00B7FF',
   },
-  // Tahap berikutnya: tambahkan keyframe projects, dst.
+  {
+    id: 'projects',
+    camera: [0, 0, -9],
+    lookAt: [0, 0, -16],
+    particleSpeed: 0.8,
+    particleOpacity: 0.65,
+    accent: '#2F8BFF',
+  },
+  // Tahap berikutnya: tambahkan keyframe journey, dst.
 ];
 
 export interface SceneFrame {

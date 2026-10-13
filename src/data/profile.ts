@@ -8,6 +8,9 @@ export const profile = {
   education: 'UIN SUSKA RIAU Graduate',
   tagline: ['BUILDING', 'SOLUTIONS', 'FOR A BETTER', 'TOMORROW'],
 
+  /** link untuk tombol "View all projects" (sesuaikan dengan akun GitHub-mu) */
+  github: 'https://github.com/IrpanAfrizal',
+
   /** foto di folder public/images */
   portrait: '/images/portrait.png',
   /**

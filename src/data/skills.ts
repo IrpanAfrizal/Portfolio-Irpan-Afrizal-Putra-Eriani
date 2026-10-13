@@ -30,7 +30,17 @@ export const SKILL_LEVEL = 70;
 
 -------------------------------------------------------------------------- */
 
-/** Kartu 3D yang mengorbit bumi. Setiap cincin punya radius, kemiringan, dan kecepatan sendiri. */
+/**
+ * Benda di tengah semesta skill. Ganti SATU kata ini lalu simpan, tampilan langsung berubah:
+ *   'galaxy'  = galaksi spiral berisi ribuan bintang
+ *   'neural'  = jaringan saraf dengan denyut data mengalir
+ *   'crystal' = permata biru berfaset
+ *   'earth'   = bumi
+ */
+export type Centerpiece = 'galaxy' | 'neural' | 'crystal' | 'earth';
+export const CENTERPIECE: Centerpiece = 'neural';
+
+/** Kartu 3D yang mengorbit benda tengah. Setiap cincin punya radius, kemiringan, dan kecepatan sendiri. */
 export interface OrbitCard {
   label: string;
   badge: string;
