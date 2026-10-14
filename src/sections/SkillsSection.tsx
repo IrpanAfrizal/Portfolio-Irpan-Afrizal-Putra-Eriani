@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react';
+import { useRef } from 'react';
 import {
   ChipIcon,
   CodeIcon,
@@ -21,76 +22,145 @@ const ICONS: Record<SkillIcon, ReactNode> = {
   server: <ServerIcon />,
 };
 
-function GroupList({ groups, offset }: { groups: SkillGroup[]; offset: number }) {
+const ICON_BG_COLORS: Record<SkillIcon, string> = {
+  code: '#EBF2FA', layers: '#E8F5E9', database: '#F3E8FF',
+  chip: '#FFF3E0', terminal: '#E0F7FA', server: '#EDE7F6',
+};
+
+const ICON_TEXT_COLORS: Record<SkillIcon, string> = {
+  code: '#6895AE', layers: '#4CAF50', database: '#9C27B0',
+  chip: '#FF9800', terminal: '#00BCD4', server: '#673AB7',
+};
+
+// Data badge dengan nilai parallax (depth) berbeda untuk efek 3D
+const FLOATING_BADGES = [
+  { id: 'react', label: 'React', icon: '⚛', iconColor: '#61DAFB', position: 'pos-react', parallax: 25 },
+  { id: 'js', label: 'JavaScript', icon: 'JS', iconStyle: { background: '#F7DF1E', color: '#000', padding: '2px 5px', borderRadius: '4px' }, position: 'pos-js', parallax: 25 },
+  { id: 'codeigniter', label: 'CodeIgniter', icon: '🔥', iconColor: '#EE4323', position: 'pos-codeigniter', parallax: 45 },
+  { id: 'php', label: 'PHP', icon: '🐘', iconColor: '#8892BF', position: 'pos-php', parallax: 45 },
+  { id: 'android', label: 'Android', icon: '🤖', iconColor: '#3DDC84', position: 'pos-android', parallax: 60 },
+  { id: 'postgres', label: 'PostgreSQL', icon: '🐘', iconColor: '#336791', position: 'pos-postgres', parallax: 60 },
+  { id: 'python', label: 'Python', icon: '🐍', iconColor: '#3776AB', position: 'pos-python', parallax: 75 },
+  { id: 'git', label: 'Git', icon: '🔶', iconColor: '#F05032', position: 'pos-git', parallax: 75 },
+];
+
+function SkillCard({ group, index }: { group: SkillGroup; index: number }) {
   return (
-    <ul className="skill-groups">
-      {groups.map((group, index) => (
-        <li key={group.id} className="skill-group" data-reveal style={step(offset + index)}>
-          <span className="fact-icon">{ICONS[group.icon]}</span>
-          <div>
-            <h3>{group.title}</h3>
-            <p>{group.items.join(', ')}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/* ---------- DINONAKTIFKAN: lingkaran Skills Level ----------
-   Untuk mengaktifkan lagi: aktifkan SKILL_LEVEL di data/skills.ts,
-   import-nya di atas, lalu panggil <SkillLevel /> di dalam .skills-copy.
-
-function SkillLevel() {
-  const circumference = 2 * Math.PI * 46;
-  const dash = (SKILL_LEVEL / 100) * circumference;
-
-  return (
-    <div className="skill-level" data-reveal style={step(9)}>
-      <svg viewBox="0 0 112 112" width="112" height="112" role="img" aria-label={`Skills level ${SKILL_LEVEL} persen`}>
-        <circle className="skill-ring-track" cx="56" cy="56" r="46" />
-        <circle
-          className="skill-ring-progress"
-          cx="56"
-          cy="56"
-          r="46"
-          style={{ '--dash': dash, '--full': circumference } as CSSProperties}
-        />
-        <text x="56" y="62" textAnchor="middle">{SKILL_LEVEL}%</text>
-      </svg>
-      <div>
-        <strong>Skills Level</strong>
-        <span>Keep Learning</span>
+    <div className="skill-card" data-reveal style={step(index + 3)}>
+      <div
+        className="skill-card-icon"
+        style={{ backgroundColor: ICON_BG_COLORS[group.icon], color: ICON_TEXT_COLORS[group.icon] }}
+      >
+        {ICONS[group.icon]}
       </div>
+      <div className="skill-card-info">
+        <h3>{group.title}</h3>
+        <p>{group.items.join(', ')}</p>
+      </div>
+      <div className="skill-card-arrow">→</div>
     </div>
   );
 }
--------------------------------------------------------------- */
 
 export default function SkillsSection() {
   const ref = useReveal<HTMLElement>(0.2);
+  const graphicRef = useRef<HTMLDivElement>(null);
+
+  // Handler untuk melacak posisi kursor di atas area grafis
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = graphicRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    // Normalisasi ke -0.5 .. 0.5
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.setProperty('--mx', x.toFixed(4));
+    el.style.setProperty('--my', y.toFixed(4));
+  };
+
+  // Reset saat kursor keluar
+  const handlePointerLeave = () => {
+    const el = graphicRef.current;
+    if (!el) return;
+    el.style.setProperty('--mx', '0');
+    el.style.setProperty('--my', '0');
+  };
 
   return (
     <section id="skills" ref={ref} className="skills-section" aria-labelledby="skills-title">
-      <div className="skills-grid">
-        <div className="skills-copy">
-          <header className="skills-head">
+      <div className="skills-container">
+        
+        {/* Kolom Kiri: Daftar Skill */}
+        <div className="skills-left">
+          <header className="skills-header">
             <p className="section-label" data-reveal style={step(0)}>
               03 — SKILLS UNIVERSE
             </p>
-            <h2 id="skills-title" className="about-title" data-reveal style={step(1)}>
+            <h2 id="skills-title" className="skills-title-main" data-reveal style={step(1)}>
               TECHNOLOGY <span>STACK</span>
             </h2>
-            <p className="skills-lead" data-reveal style={step(2)}>
+            <p className="skills-desc" data-reveal style={step(2)}>
               Berikut adalah teknologi dan tools yang saya kuasai serta gunakan dalam berbagai project.
             </p>
           </header>
 
-          <GroupList groups={SKILL_GROUPS} offset={3} />
+          <div className="skill-cards-list">
+            {SKILL_GROUPS.map((group, index) => (
+              <SkillCard key={group.id} group={group} index={index} />
+            ))}
+          </div>
         </div>
 
-        {/* zona tempat bumi 3D dipasang (lihat three/SkillsUniverse.tsx) */}
-        <div className="skills-zone" data-skills-zone aria-hidden="true" />
+        {/* Kolom Kanan: Grafis Melayang yang Interaktif */}
+        <div className="skills-right" data-reveal style={step(2)}>
+          <div
+            className="universe-graphic"
+            ref={graphicRef}
+            onPointerMove={handlePointerMove}
+            onPointerLeave={handlePointerLeave}
+          >
+            {/* Garis penghubung (SVG) */}
+            <svg className="universe-lines" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
+              <path d="M250,250 L120,120 M250,250 L380,120 M250,250 L100,250 M250,250 L400,250 M250,250 L120,380 M250,250 L380,380" stroke="#D3E0EA" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+            </svg>
+
+            {/* Stack Tengah (IA) — tilts with mouse */}
+            <div className="center-stack">
+              <div className="stack-layer layer-1"></div>
+              <div className="stack-layer layer-2"></div>
+              <div className="stack-layer layer-3">
+                <span className="stack-text">IA</span>
+              </div>
+            </div>
+
+            {/* Badge Melayang dengan parallax berbeda-beda */}
+            {FLOATING_BADGES.map((badge) => (
+              <div
+                key={badge.id}
+                className={`floating-badge ${badge.position}`}
+                style={{ '--parallax': badge.parallax } as CSSProperties}
+              >
+                <span
+                  className="badge-icon"
+                  style={badge.iconStyle || { color: badge.iconColor }}
+                >
+                  {badge.icon}
+                </span>
+                {badge.label}
+              </div>
+            ))}
+
+            {/* Kotak Callout di Bawah */}
+            <div className="tech-callout">
+              <div className="callout-icon">💡</div>
+              <div className="callout-text">
+                <h4>TECHNOLOGY POWERS IDEAS</h4>
+                <p>Dengan kombinasi tools dan teknologi yang tepat, setiap ide bisa menjadi solusi nyata.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

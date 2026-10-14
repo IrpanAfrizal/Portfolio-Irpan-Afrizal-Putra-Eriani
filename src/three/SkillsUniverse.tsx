@@ -51,11 +51,12 @@ function drawCard(canvas: HTMLCanvasElement, label: string, badge: string, color
   ctx.clearRect(0, 0, 256, 96);
 
   roundRect(ctx, 3, 3, 250, 90, 16);
-  ctx.fillStyle = 'rgba(6, 18, 42, 0.9)';
+  // Mengubah background kartu menjadi putih bersih dengan sedikit transparansi
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.95)'; 
   ctx.fill();
   ctx.lineWidth = 2.5;
   ctx.strokeStyle = color;
-  ctx.globalAlpha = 0.85;
+  ctx.globalAlpha = 0.6; // Sedikit transparan agar menyatu dengan background cream
   ctx.stroke();
   ctx.globalAlpha = 1;
 
@@ -63,20 +64,22 @@ function drawCard(canvas: HTMLCanvasElement, label: string, badge: string, color
   ctx.arc(46, 48, 22, 0, TAU);
   ctx.fillStyle = color;
   ctx.fill();
-  ctx.fillStyle = '#04101f';
-  ctx.font = '700 19px "Space Grotesk", sans-serif';
+  // Mengubah warna teks di dalam badge menjadi putih agar kontras dengan warna brand
+  ctx.fillStyle = '#FFFFFF'; 
+  ctx.font = '700 19px "DM Sans", sans-serif'; // Mengganti font menjadi DM Sans
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(badge, 46, 49);
 
   let size = 30;
   ctx.textAlign = 'left';
-  ctx.font = `600 ${size}px "Space Grotesk", sans-serif`;
+  ctx.font = `600 ${size}px "DM Sans", sans-serif`; // Mengganti font menjadi DM Sans
   while (ctx.measureText(label).width > 150 && size > 14) {
     size -= 1;
-    ctx.font = `600 ${size}px "Space Grotesk", sans-serif`;
+    ctx.font = `600 ${size}px "DM Sans", sans-serif`;
   }
-  ctx.fillStyle = '#F5F7FA';
+  // Mengubah warna teks utama menjadi Dark Slate Blue agar terbaca di background putih
+  ctx.fillStyle = '#2A3B45'; 
   ctx.fillText(label, 80, 49);
 }
 
@@ -96,7 +99,8 @@ export default function SkillsUniverse() {
 
   const assets = useMemo(() => {
     const rings = ORBITS.map(
-      () => new THREE.MeshBasicMaterial({ color: '#2F8BFF', transparent: true, opacity: 0.35, depthWrite: false }),
+      // Mengubah warna cincin menjadi Soft Blue (Dusty Blue)
+      () => new THREE.MeshBasicMaterial({ color: '#6895AE', transparent: true, opacity: 0.4, depthWrite: false }),
     );
 
     const cards = ORBITS.map((orbit) =>
@@ -118,7 +122,7 @@ export default function SkillsUniverse() {
     );
 
     const fadeables: Fadeable[] = [
-      ...rings.map((material) => ({ material, base: 0.35 })),
+      ...rings.map((material) => ({ material, base: 0.4 })),
       ...cards.flat().map((c) => ({ material: c.material, base: 1 })),
     ];
 

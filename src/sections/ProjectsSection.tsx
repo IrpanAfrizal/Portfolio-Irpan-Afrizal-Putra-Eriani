@@ -1,36 +1,103 @@
 import type { CSSProperties } from 'react';
 import { ArrowRightIcon } from '../components/Icons';
-import GlassFolder, { type ArtPreset, type FolderFile } from '../components/GlassFolder';
+import ProjectArt from '../components/ProjectArt';
+import { CardStack, type CardStackItem } from '../components/CardStack';
 import { PROJECTS, type Project, type ProjectKind } from '../data/projects';
 import { profile } from '../data/profile';
 import { useReveal } from '../hooks/useReveal';
 
 const step = (i: number) => ({ '--i': i }) as CSSProperties;
 
-/** kind project → preset art folder. Bebas kamu ubah. */
-const ART_BY_KIND: Record<ProjectKind, ArtPreset> = {
-  ai: 'ember',
-  web: 'aurora',
-  mobile: 'dusk',
-  map: 'glacier',
-  api: 'verdant',
-  three: 'aurora',
-  image3d: 'dusk',
+type FanItem = CardStackItem & {
+  kind: ProjectKind;
+  year?: number;
+  tags: string[];
+  link?: string;
+  summary: string;
 };
 
-/** Ubah data Project → daftar file di dalam folder. */
-function toFiles(project: Project): FolderFile[] {
-  const tags: FolderFile[] = project.tags.map((tag) => ({
-    name: tag,
-    meta: 'tech',
-  }));
+const FAN_ITEMS: FanItem[] = PROJECTS.map((p: Project) => ({
+  id: p.id,
+  title: p.title,
+  description: p.summary,
+  summary: p.summary,
+  imageSrc: p.image,
+  href: p.link,
+  link: p.link,
+  kind: p.kind,
+  year: p.year,
+  tags: p.tags,
+}));
 
-  const open: FolderFile[] = project.link
-    ? [{ name: 'Open project', meta: '↗ github', href: project.link }]
-    : [];
+function ArrowUpRight({ size = 20 }: { size?: number }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width={size}
+      height={size}
+      aria-hidden="true"
+    >
+      <path d="M7 17 17 7" />
+      <path d="M8 7h9v9" />
+    </svg>
+  );
+}
 
-  // File terakhir = paling depan di stack (paling terlihat).
-  return [...tags, ...open];
+function FanCard({ item, active }: { item: FanItem; active: boolean }) {
+  const year = item.year ?? 2024;
+
+  return (
+    <article className={'fan-card' + (active ? ' is-active' : '')}>
+      <div className="fan-card-media">
+        {item.imageSrc ? (
+          <img
+            src={item.imageSrc}
+            alt={item.title}
+            draggable={false}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <ProjectArt kind={item.kind} />
+        )}
+        <span className="fan-card-year">{year}</span>
+        <div className="fan-card-fade" aria-hidden="true" />
+      </div>
+
+      <div className="fan-card-body">
+        <h3>{item.title}</h3>
+        <p>{item.summary}</p>
+        <ul className="fan-card-tags">
+          {item.tags.slice(0, 3).map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
+      </div>
+
+      {item.link ? (
+        <a
+          className="fan-card-go"
+          href={item.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Buka ${item.title}`}
+          onClick={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          <ArrowUpRight />
+        </a>
+      ) : (
+        <span className="fan-card-go is-static" aria-hidden="true">
+          <ArrowUpRight />
+        </span>
+      )}
+    </article>
+  );
 }
 
 export default function ProjectsSection() {
@@ -53,8 +120,7 @@ export default function ProjectsSection() {
               FEATURED <span>PROJECTS</span>
             </h2>
             <p className="skills-lead" data-reveal style={step(2)}>
-              Beberapa project yang pernah saya kerjakan, mulai dari pengembangan aplikasi web,
-              mobile, hingga sistem berbasis AI. Klik folder untuk membuka isinya.
+              Geser kartu, klik untuk memilih, atau pakai panah kiri/kanan untuk menjelajah.
             </p>
           </div>
 
@@ -70,23 +136,30 @@ export default function ProjectsSection() {
           </a>
         </header>
 
-        <div className="projects-folders" data-reveal style={step(3)}>
-          {PROJECTS.map((project, i) => (
-            <GlassFolder
-              key={project.id}
-              label={project.title}
-              meta={project.summary}
-              art={ART_BY_KIND[project.kind]}
-              seed={i * 13 + 3}
-              tone="dark"
-              labelPlacement="top-left"
-              action="none"
-              width={280}
-              appear
-              appearDelay={i * 120}
-              files={toFiles(project)}
-            />
-          ))}
+        <div className="projects-stack" data-reveal style={step(3)}>
+          <CardStack<FanItem>
+            items={FAN_ITEMS}
+            initialIndex={0}
+            maxVisible={5}
+            cardWidth={380}          // ← sebelumnya 540
+            cardHeight={280}         // ← sebelumnya 420
+            overlap={0.58}           // rapat sedikit lebih
+            spreadDeg={38}           // fan sedikit lebih sempit
+            perspectivePx={1100}
+            depthPx={110}            // kedalaman lebih dangkal
+            tiltXDeg={9}
+            activeLiftPx={16}        
+            activeScale={1.02}
+            inactiveScale={0.94}
+            springStiffness={260}
+            springDamping={30}
+            loop
+            autoAdvance
+            intervalMs={4200}
+            pauseOnHover
+            showDots
+            renderCard={(item, { active }) => <FanCard item={item} active={active} />}
+          />
         </div>
       </div>
     </section>

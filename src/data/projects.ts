@@ -25,6 +25,7 @@ export const PROJECTS: Project[] = [
     kind: 'ai',
     tags: ['React', 'Python', 'Qdrant'],
     link: 'https://github.com/IrpanAfrizal/Chatbot-Mawaris-Ai',
+    image: '/images/projects/about-portrait.png',
     year: 2026,
   },
   {

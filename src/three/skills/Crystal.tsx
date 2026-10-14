@@ -41,13 +41,19 @@ void main(){
   float fres = pow(1.0 - abs(dot(n, V)), 2.0);
   float facet = dot(n, normalize(uLightDir)) * 0.5 + 0.5;
 
-  vec3 col = mix(vec3(0.005, 0.05, 0.22), vec3(0.04, 0.38, 0.95), facet);
-  col += vec3(0.25, 0.8, 1.0) * fres * 0.9;
+  // Palet warna baru: Soft Blue / Dusty Blue
+  vec3 colBaseDark = vec3(0.35, 0.5, 0.6); // #597f9a
+  vec3 colBaseLight = vec3(0.8, 0.88, 0.93); // #cce0ed
+  vec3 col = mix(colBaseDark, colBaseLight, facet);
 
+  // Fresnel glow (Soft Blue terang)
+  col += vec3(0.4, 0.7, 0.9) * fres * 0.8;
+
+  // Kilauan putih bersih
   float streak = pow(max(0.0, sin(dot(n, vec3(3.1, 5.3, 2.7)) * 5.0 + uTime * 0.5)), 10.0);
-  col += vec3(0.6, 0.95, 1.0) * streak * 0.45;
+  col += vec3(1.0, 1.0, 1.0) * streak * 0.6;
 
-  gl_FragColor = vec4(col, (0.55 + fres * 0.4) * uOpacity);
+  gl_FragColor = vec4(col, (0.6 + fres * 0.4) * uOpacity);
   #include <colorspace_fragment>
 }
 `;
@@ -78,12 +84,14 @@ export default function Crystal() {
     const innerEdges = new THREE.EdgesGeometry(innerGeo);
     const shardGeo = new THREE.TetrahedronGeometry(1, 0);
 
-    const outerLine = new THREE.LineBasicMaterial({ color: '#7FD8FF', transparent: true, opacity: 0.9, depthWrite: false });
-    const innerLine = new THREE.LineBasicMaterial({ color: '#BFEFFF', transparent: true, opacity: 0.7, depthWrite: false });
+    // Garis tepi kristal disesuaikan dengan Soft Blue
+    const outerLine = new THREE.LineBasicMaterial({ color: '#6895AE', transparent: true, opacity: 0.8, depthWrite: false });
+    const innerLine = new THREE.LineBasicMaterial({ color: '#A1C4D6', transparent: true, opacity: 0.6, depthWrite: false });
 
     const glowMaterial = createGlowPointsMaterial();
     const glowGeometry = buildGlowGeometry([
-      { x: 0, y: 0, z: 0, color: new THREE.Color('#4FA8FF'), size: 0.95 },
+      // Glow inti disesuaikan menjadi Soft Blue
+      { x: 0, y: 0, z: 0, color: new THREE.Color('#6895AE'), size: 0.95 },
       { x: 0, y: 0, z: 0, color: new THREE.Color('#FFFFFF'), size: 0.3 },
     ]);
 
@@ -102,8 +110,8 @@ export default function Crystal() {
 
     assets.glass.uniforms.uOpacity.value = o;
     assets.glass.uniforms.uTime.value = t;
-    assets.outerLine.opacity = 0.9 * o;
-    assets.innerLine.opacity = 0.7 * o;
+    assets.outerLine.opacity = 0.8 * o;
+    assets.innerLine.opacity = 0.6 * o;
     updateGlowMaterial(assets.glowMaterial, skillsFrame);
 
     if (groupRef.current) {
