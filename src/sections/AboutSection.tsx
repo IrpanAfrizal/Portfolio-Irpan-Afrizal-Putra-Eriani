@@ -81,7 +81,7 @@ export default function AboutSection() {
               <i />
             </span>
             <img
-              src={profile.aboutPortrait}
+              src={profile.portrait}
               alt={`Potret ${profile.fullName}`}
               loading="lazy"
               decoding="async"

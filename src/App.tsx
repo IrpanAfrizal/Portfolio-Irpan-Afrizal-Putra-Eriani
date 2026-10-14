@@ -3,6 +3,8 @@ import ScrollController from './three/ScrollController';
 import SideNav from './components/SideNav';
 import Hero from './sections/Hero';
 import AboutSection from './sections/AboutSection';
+import SkillsSection from './sections/SkillsSection';
+import ProjectsSection from './sections/ProjectsSection';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
 
         <Hero />
         <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
       </main>
     </>
   );
